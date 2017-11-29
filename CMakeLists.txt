@@ -1,7 +1,13 @@
 cmake_minimum_required(VERSION 3.8)
-project(bf)
+project(Blowfish_2)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp blowfish.cpp blowfish.h constants.h blowfish1.cpp blowfish1.h)
-add_executable(bf ${SOURCE_FILES})
+set(SOURCE_FILES
+        blowfish.cpp
+        blowfish.h
+        blowfish1.h
+        constants.h
+        main.cpp)
+
+add_executable(Blowfish_2 ${SOURCE_FILES})

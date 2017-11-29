@@ -53,45 +53,45 @@ RM = "C:\Program Files\JetBrains\CLion 2017.2.3\bin\cmake\bin\cmake.exe" -E remo
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\programs\C++\bf
+CMAKE_SOURCE_DIR = D:\programs\C++\bf\Blowfish_2
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\programs\C++\bf\cmake-build-debug
+CMAKE_BINARY_DIR = D:\programs\C++\bf\Blowfish_2\cmake-build-debug
 
 #=============================================================================
-# Target rules for target CMakeFiles/bf.dir
+# Target rules for target CMakeFiles/Blowfish_2.dir
 
 # All Build rule for target.
-CMakeFiles/bf.dir/all:
-	$(MAKE) -f CMakeFiles\bf.dir\build.make CMakeFiles/bf.dir/depend
-	$(MAKE) -f CMakeFiles\bf.dir\build.make CMakeFiles/bf.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=D:\programs\C++\bf\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4 "Built target bf"
-.PHONY : CMakeFiles/bf.dir/all
+CMakeFiles/Blowfish_2.dir/all:
+	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/depend
+	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=D:\programs\C++\bf\Blowfish_2\cmake-build-debug\CMakeFiles --progress-num=1,2,3 "Built target Blowfish_2"
+.PHONY : CMakeFiles/Blowfish_2.dir/all
 
 # Include target in all.
-all: CMakeFiles/bf.dir/all
+all: CMakeFiles/Blowfish_2.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/bf.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\programs\C++\bf\cmake-build-debug\CMakeFiles 4
-	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/bf.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\programs\C++\bf\cmake-build-debug\CMakeFiles 0
-.PHONY : CMakeFiles/bf.dir/rule
+CMakeFiles/Blowfish_2.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\programs\C++\bf\Blowfish_2\cmake-build-debug\CMakeFiles 3
+	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/Blowfish_2.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\programs\C++\bf\Blowfish_2\cmake-build-debug\CMakeFiles 0
+.PHONY : CMakeFiles/Blowfish_2.dir/rule
 
 # Convenience name for target.
-bf: CMakeFiles/bf.dir/rule
+Blowfish_2: CMakeFiles/Blowfish_2.dir/rule
 
-.PHONY : bf
-
-# clean rule for target.
-CMakeFiles/bf.dir/clean:
-	$(MAKE) -f CMakeFiles\bf.dir\build.make CMakeFiles/bf.dir/clean
-.PHONY : CMakeFiles/bf.dir/clean
+.PHONY : Blowfish_2
 
 # clean rule for target.
-clean: CMakeFiles/bf.dir/clean
+CMakeFiles/Blowfish_2.dir/clean:
+	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/clean
+.PHONY : CMakeFiles/Blowfish_2.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/Blowfish_2.dir/clean
 
 .PHONY : clean
 

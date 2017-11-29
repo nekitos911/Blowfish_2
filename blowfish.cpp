@@ -18,8 +18,6 @@ Blowfish::Blowfish(const std::vector<BYTE> &key)
             std::cout << "lenght is > " << i << std::endl;
     }
 }
-Blowfish::~Blowfish(){
-}
 
 void Blowfish::setupKey(const BYTE *key, int length) {
     int j = 0;
@@ -29,30 +27,30 @@ void Blowfish::setupKey(const BYTE *key, int length) {
     std::memcpy(p,bf_P,sizeof(bf_P));
     std::memcpy(s,bf_S, sizeof(bf_S));
 
-    for(int i = 0;i < N + 2;i++) {
+    for (unsigned int &i : p) {
         temp.dword = 0;
         temp.byteStruct.byte0 = key[j];
         temp.byteStruct.byte1 = key[(j + 1) % length];
         temp.byteStruct.byte2 = key[(j + 2) % length];
         temp.byteStruct.byte3 = key[(j + 3) % length];
         data = temp.dword;
-        p[i] ^= data;
+        i ^= data;
         j = (j + 4) % length;
     }
     xl = 0x00000000;
     xr = 0x00000000;
 
-    for(int i = 0;i < N + 2;i += 2) {
+    for(size_t i = 0;i < N + 2;i += 2) {
         encipher(&xl, &xr);
         p[i] = xl;
         p[i + 1] = xr;
     }
 
-    for (int i = 0; i < 4; i++) {
-        for (int k = 0; k < 256; k += 2) {
+    for (auto &i : s) {
+        for (size_t k = 0; k < 256; k += 2) {
             encipher(&xl,&xr);
-            s[i][k] = xl;
-            s[i][k + 1] = xr;
+            i[k] = xl;
+            i[k + 1] = xr;
         }
     }
 }
@@ -64,7 +62,7 @@ void Blowfish::encipher(DWORD *xl, DWORD *xr) {
 
     Xl.dword ^= p[0];
 
-    for(int i = 0;i < 16;i += 2) {
+    for(size_t i = 0;i < 16;i += 2) {
         Xr.dword ^= (F(Xl) ^ p[i + 1]);
         Xl.dword ^= (F(Xr) ^ p[i + 2]);
     }
@@ -76,12 +74,12 @@ void Blowfish::encipher(DWORD *xl, DWORD *xr) {
 }
 
 void Blowfish::decipher(DWORD *xl, DWORD *xr) {
-    union aword Xl,Xr;
+    union aword Xl{},Xr{};
     Xl.dword = *xl;
     Xr.dword = *xr;
 
     Xl.dword ^= p[N + 1];
-    for(int i = N;i > 0;i -= 2) {
+    for(size_t i = N;i > 0;i -= 2) {
         Xr.dword ^= (F(Xl) ^ p[i]);
         Xl.dword ^= (F(Xr) ^ p[i - 1]);
     }
@@ -94,18 +92,21 @@ void Blowfish::decipher(DWORD *xl, DWORD *xr) {
 
 std::vector<BYTE> Blowfish::encrypt(const std::vector<BYTE> &dataInput) {
     std::vector<BYTE> dataOutput = dataInput;
-    int padding_length;
+    size_t padding_length;
     if(dataOutput.size() % 8 == 0)
         padding_length = 0;
     else
         padding_length = sizeof(uint64_t) - dataInput.size() % sizeof(uint64_t);
-    for (int i = 0; i < padding_length; ++i) {
+    for (size_t i = 0; i < padding_length; ++i) {
         dataOutput.push_back((BYTE)(((int)'0') + padding_length));
+    }
+    for (size_t i = 0; i < sizeof(uint64_t); ++i) {
+        dataOutput.data()[i] ^= IV[i];
     }
     uint32_t *Xl = &reinterpret_cast<uint32_t *>(dataOutput.data())[0];
     uint32_t *Xr = &reinterpret_cast<uint32_t *>(dataOutput.data())[1];
     encipher(Xl,Xr);
-    for (int i = 1; i < dataOutput.size() / sizeof(uint64_t); ++i) {
+    for (size_t i = 1; i < dataOutput.size() / sizeof(uint64_t); ++i) {
         uint64_t *firstBlock = &reinterpret_cast<uint64_t *>(dataOutput.data())[i - 1];
         uint64_t *secondBlock = &reinterpret_cast<uint64_t *>(dataOutput.data())[i];
         *secondBlock ^= *firstBlock;
@@ -119,7 +120,7 @@ std::vector<BYTE> Blowfish::encrypt(const std::vector<BYTE> &dataInput) {
 std::vector<BYTE> Blowfish::decrypt(const std::vector<BYTE> &dataInput) {
     std::vector<BYTE> dataOutput = dataInput;
 
-    for (int i = dataOutput.size() / sizeof(uint64_t) - 1; i >= 1 ; --i) {
+    for (size_t i = dataOutput.size() / sizeof(uint64_t) - 1; i >= 1 ; --i) {
         uint64_t *firstBlock = &reinterpret_cast<uint64_t *>(dataOutput.data())[i];
         uint32_t *xl = &reinterpret_cast<uint32_t *>(dataOutput.data())[i * 2];
         uint32_t *xr = &reinterpret_cast<uint32_t *>(dataOutput.data())[i * 2 + 1];
@@ -130,6 +131,9 @@ std::vector<BYTE> Blowfish::decrypt(const std::vector<BYTE> &dataInput) {
     uint32_t *Xl = &reinterpret_cast<uint32_t *>(dataOutput.data())[0];
     uint32_t *Xr = &reinterpret_cast<uint32_t *>(dataOutput.data())[1];
     decipher(Xl,Xr);
+    for (size_t j = 0; j < sizeof(uint64_t); ++j) {
+        dataOutput.data()[j] ^= IV[j];
+    }
 
     getOutputLength(dataOutput);
 
@@ -145,9 +149,9 @@ DWORD Blowfish::F(union aword value) {
 }
 
 int Blowfish::getOutputLength(std::vector<BYTE> &data) {
-    int length = data[data.size() - 1] - '0';
+    size_t length = data[data.size() - 1] - '0';
     if(0 < length && length < 10)
-        for (int i = 0; i < length; ++i) {
+        for (size_t i = 0; i < length; ++i) {
             data.pop_back();
         }
     return length;

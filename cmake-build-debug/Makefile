@@ -47,10 +47,10 @@ RM = "C:\Program Files\JetBrains\CLion 2017.2.3\bin\cmake\bin\cmake.exe" -E remo
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\programs\C++\bf
+CMAKE_SOURCE_DIR = D:\programs\C++\bf\Blowfish_2
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\programs\C++\bf\cmake-build-debug
+CMAKE_BINARY_DIR = D:\programs\C++\bf\Blowfish_2\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,9 +79,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\programs\C++\bf\cmake-build-debug\CMakeFiles D:\programs\C++\bf\cmake-build-debug\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\programs\C++\bf\Blowfish_2\cmake-build-debug\CMakeFiles D:\programs\C++\bf\Blowfish_2\cmake-build-debug\CMakeFiles\progress.marks
 	$(MAKE) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\programs\C++\bf\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\programs\C++\bf\Blowfish_2\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -110,17 +110,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named bf
+# Target rules for targets named Blowfish_2
 
 # Build rule for target.
-bf: cmake_check_build_system
-	$(MAKE) -f CMakeFiles\Makefile2 bf
-.PHONY : bf
+Blowfish_2: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 Blowfish_2
+.PHONY : Blowfish_2
 
 # fast build rule for target.
-bf/fast:
-	$(MAKE) -f CMakeFiles\bf.dir\build.make CMakeFiles/bf.dir/build
-.PHONY : bf/fast
+Blowfish_2/fast:
+	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/build
+.PHONY : Blowfish_2/fast
 
 blowfish.obj: blowfish.cpp.obj
 
@@ -128,7 +128,7 @@ blowfish.obj: blowfish.cpp.obj
 
 # target to build an object file
 blowfish.cpp.obj:
-	$(MAKE) -f CMakeFiles\bf.dir\build.make CMakeFiles/bf.dir/blowfish.cpp.obj
+	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/blowfish.cpp.obj
 .PHONY : blowfish.cpp.obj
 
 blowfish.i: blowfish.cpp.i
@@ -137,7 +137,7 @@ blowfish.i: blowfish.cpp.i
 
 # target to preprocess a source file
 blowfish.cpp.i:
-	$(MAKE) -f CMakeFiles\bf.dir\build.make CMakeFiles/bf.dir/blowfish.cpp.i
+	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/blowfish.cpp.i
 .PHONY : blowfish.cpp.i
 
 blowfish.s: blowfish.cpp.s
@@ -146,35 +146,8 @@ blowfish.s: blowfish.cpp.s
 
 # target to generate assembly for a file
 blowfish.cpp.s:
-	$(MAKE) -f CMakeFiles\bf.dir\build.make CMakeFiles/bf.dir/blowfish.cpp.s
+	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/blowfish.cpp.s
 .PHONY : blowfish.cpp.s
-
-blowfish1.obj: blowfish1.cpp.obj
-
-.PHONY : blowfish1.obj
-
-# target to build an object file
-blowfish1.cpp.obj:
-	$(MAKE) -f CMakeFiles\bf.dir\build.make CMakeFiles/bf.dir/blowfish1.cpp.obj
-.PHONY : blowfish1.cpp.obj
-
-blowfish1.i: blowfish1.cpp.i
-
-.PHONY : blowfish1.i
-
-# target to preprocess a source file
-blowfish1.cpp.i:
-	$(MAKE) -f CMakeFiles\bf.dir\build.make CMakeFiles/bf.dir/blowfish1.cpp.i
-.PHONY : blowfish1.cpp.i
-
-blowfish1.s: blowfish1.cpp.s
-
-.PHONY : blowfish1.s
-
-# target to generate assembly for a file
-blowfish1.cpp.s:
-	$(MAKE) -f CMakeFiles\bf.dir\build.make CMakeFiles/bf.dir/blowfish1.cpp.s
-.PHONY : blowfish1.cpp.s
 
 main.obj: main.cpp.obj
 
@@ -182,7 +155,7 @@ main.obj: main.cpp.obj
 
 # target to build an object file
 main.cpp.obj:
-	$(MAKE) -f CMakeFiles\bf.dir\build.make CMakeFiles/bf.dir/main.cpp.obj
+	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/main.cpp.obj
 .PHONY : main.cpp.obj
 
 main.i: main.cpp.i
@@ -191,7 +164,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles\bf.dir\build.make CMakeFiles/bf.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -200,7 +173,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles\bf.dir\build.make CMakeFiles/bf.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -209,15 +182,12 @@ help:
 	@echo ... all (the default if no target is provided)
 	@echo ... clean
 	@echo ... depend
-	@echo ... bf
+	@echo ... Blowfish_2
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... blowfish.obj
 	@echo ... blowfish.i
 	@echo ... blowfish.s
-	@echo ... blowfish1.obj
-	@echo ... blowfish1.i
-	@echo ... blowfish1.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

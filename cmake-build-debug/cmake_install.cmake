@@ -1,8 +1,8 @@
-# Install script for directory: D:/programs/C++/bf
+# Install script for directory: D:/programs/C++/bf/Blowfish_2
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/bf")
+  set(CMAKE_INSTALL_PREFIX "C:/Program Files (x86)/Blowfish_2")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -35,5 +35,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/programs/C++/bf/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/programs/C++/bf/Blowfish_2/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
