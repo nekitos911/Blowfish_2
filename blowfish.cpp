@@ -22,18 +22,18 @@ Blowfish::Blowfish(const std::vector<BYTE> &key)
 void Blowfish::setupKey(const BYTE *key, int length) {
     int j = 0;
     union aword temp{};
-    DWORD data,xl,xr;
+    uint32_t data,xl,xr;
 
     std::memcpy(p,bf_P,sizeof(bf_P));
     std::memcpy(s,bf_S, sizeof(bf_S));
 
     for (unsigned int &i : p) {
-        temp.dword = 0;
+        temp.uint32 = 0;
         temp.byteStruct.byte0 = key[j];
         temp.byteStruct.byte1 = key[(j + 1) % length];
         temp.byteStruct.byte2 = key[(j + 2) % length];
         temp.byteStruct.byte3 = key[(j + 3) % length];
-        data = temp.dword;
+        data = temp.uint32;
         i ^= data;
         j = (j + 4) % length;
     }
@@ -55,39 +55,39 @@ void Blowfish::setupKey(const BYTE *key, int length) {
     }
 }
 
-void Blowfish::encipher(DWORD *xl, DWORD *xr) {
+void Blowfish::encipher(uint32_t *xl, uint32_t *xr) {
     union aword Xl{},Xr{};
-    Xl.dword = *xl;
-    Xr.dword = *xr;
+    Xl.uint32 = *xl;
+    Xr.uint32 = *xr;
 
-    Xl.dword ^= p[0];
+    Xl.uint32 ^= p[0];
 
     for(size_t i = 0;i < 16;i += 2) {
-        Xr.dword ^= (F(Xl) ^ p[i + 1]);
-        Xl.dword ^= (F(Xr) ^ p[i + 2]);
+        Xr.uint32 ^= (F(Xl) ^ p[i + 1]);
+        Xl.uint32 ^= (F(Xr) ^ p[i + 2]);
     }
 
-    Xr.dword ^= p[N + 1];
+    Xr.uint32 ^= p[N + 1];
 
-    *xr = Xl.dword;
-    *xl = Xr.dword;
+    *xr = Xl.uint32;
+    *xl = Xr.uint32;
 }
 
-void Blowfish::decipher(DWORD *xl, DWORD *xr) {
+void Blowfish::decipher(uint32_t *xl, uint32_t *xr) {
     union aword Xl{},Xr{};
-    Xl.dword = *xl;
-    Xr.dword = *xr;
+    Xl.uint32 = *xl;
+    Xr.uint32 = *xr;
 
-    Xl.dword ^= p[N + 1];
+    Xl.uint32 ^= p[N + 1];
     for(size_t i = N;i > 0;i -= 2) {
-        Xr.dword ^= (F(Xl) ^ p[i]);
-        Xl.dword ^= (F(Xr) ^ p[i - 1]);
+        Xr.uint32 ^= (F(Xl) ^ p[i]);
+        Xl.uint32 ^= (F(Xr) ^ p[i - 1]);
     }
 
-    Xr.dword ^= p[0];
+    Xr.uint32 ^= p[0];
 
-    *xl = Xr.dword;
-    *xr = Xl.dword;
+    *xl = Xr.uint32;
+    *xr = Xl.uint32;
 }
 
 std::vector<BYTE> Blowfish::encrypt(const std::vector<BYTE> &dataInput) {
@@ -134,13 +134,12 @@ std::vector<BYTE> Blowfish::decrypt(const std::vector<BYTE> &dataInput) {
     for (size_t j = 0; j < sizeof(uint64_t); ++j) {
         dataOutput.data()[j] ^= IV[j];
     }
-
     getOutputLength(dataOutput);
 
     return dataOutput;
 }
 
-DWORD Blowfish::F(union aword value) {
+uint32_t Blowfish::F(union aword value) {
     auto a = value.byteStruct.byte0;
     auto b = value.byteStruct.byte1;
     auto c = value.byteStruct.byte2;

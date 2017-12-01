@@ -207,6 +207,30 @@ CMAKE_STRIP:FILEPATH=C:/MinGW/bin/strip.exe
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//The directory containing a CMake configuration file for Qt5Core.
+Qt5Core_DIR:PATH=D:/Qt/5.9.3/mingw53_32/lib/cmake/Qt5Core
+
+//The directory containing a CMake configuration file for Qt5Gui.
+Qt5Gui_DIR:PATH=D:/Qt/5.9.3/mingw53_32/lib/cmake/Qt5Gui
+
+//The directory containing a CMake configuration file for Qt5Network.
+Qt5Network_DIR:PATH=D:/Qt/5.9.3/mingw53_32/lib/cmake/Qt5Network
+
+//The directory containing a CMake configuration file for Qt5OpenGL.
+Qt5OpenGL_DIR:PATH=D:/Qt/5.9.3/mingw53_32/lib/cmake/Qt5OpenGL
+
+//The directory containing a CMake configuration file for Qt5PrintSupport.
+Qt5PrintSupport_DIR:PATH=D:/Qt/5.9.3/mingw53_32/lib/cmake/Qt5PrintSupport
+
+//The directory containing a CMake configuration file for Qt5Sql.
+Qt5Sql_DIR:PATH=D:/Qt/5.9.3/mingw53_32/lib/cmake/Qt5Sql
+
+//The directory containing a CMake configuration file for Qt5Widgets.
+Qt5Widgets_DIR:PATH=D:/Qt/5.9.3/mingw53_32/lib/cmake/Qt5Widgets
+
+//The directory containing a CMake configuration file for Qt5Xml.
+Qt5Xml_DIR:PATH=D:/Qt/5.9.3/mingw53_32/lib/cmake/Qt5Xml
+
 
 ########################
 # INTERNAL cache entries

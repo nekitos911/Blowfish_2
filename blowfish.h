@@ -7,11 +7,10 @@
 #include "cmath"
 #include "sstream"
 
-typedef uint32_t DWORD;
 typedef unsigned char BYTE;
 
 union aword { // little endian
-    DWORD dword;
+    uint32_t uint32;
     BYTE byte [4];
       struct {
         unsigned int byte3 : 8;
@@ -24,20 +23,21 @@ union aword { // little endian
 class Blowfish
 {
 private:
-    DWORD p[18];
-    DWORD s[4][256];
+    uint32_t p[18];
+    uint32_t s[4][256];
     const BYTE *IV = reinterpret_cast<const BYTE *>("qwertyui");
 
     void setupKey(const BYTE *key,int length);
-    void encipher(DWORD *xl,DWORD *xr);
-    void decipher(DWORD *xl,DWORD *xr);
-    DWORD F(aword value);
+    void encipher(uint32_t *xl,uint32_t *xr);
+    void decipher(uint32_t *xl,uint32_t *xr);
+    uint32_t F(aword value);
+
+    int getOutputLength(std::vector<BYTE> &data);
 public:
     explicit Blowfish(const std::vector<BYTE> &key);
 
     std::vector<BYTE> decrypt(const std::vector<BYTE> &dataInput);
     std::vector<BYTE> encrypt(const std::vector<BYTE> &dataInput);
 
-    int getOutputLength(std::vector<BYTE> &data);
 };
 #endif // BLOWFISH_H

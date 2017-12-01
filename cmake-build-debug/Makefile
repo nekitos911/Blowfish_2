@@ -122,6 +122,46 @@ Blowfish_2/fast:
 	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/build
 .PHONY : Blowfish_2/fast
 
+#=============================================================================
+# Target rules for targets named Blowfish_2_autogen
+
+# Build rule for target.
+Blowfish_2_autogen: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 Blowfish_2_autogen
+.PHONY : Blowfish_2_autogen
+
+# fast build rule for target.
+Blowfish_2_autogen/fast:
+	$(MAKE) -f CMakeFiles\Blowfish_2_autogen.dir\build.make CMakeFiles/Blowfish_2_autogen.dir/build
+.PHONY : Blowfish_2_autogen/fast
+
+Blowfish_2_autogen/moc_compilation.obj: Blowfish_2_autogen/moc_compilation.cpp.obj
+
+.PHONY : Blowfish_2_autogen/moc_compilation.obj
+
+# target to build an object file
+Blowfish_2_autogen/moc_compilation.cpp.obj:
+	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/Blowfish_2_autogen/moc_compilation.cpp.obj
+.PHONY : Blowfish_2_autogen/moc_compilation.cpp.obj
+
+Blowfish_2_autogen/moc_compilation.i: Blowfish_2_autogen/moc_compilation.cpp.i
+
+.PHONY : Blowfish_2_autogen/moc_compilation.i
+
+# target to preprocess a source file
+Blowfish_2_autogen/moc_compilation.cpp.i:
+	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/Blowfish_2_autogen/moc_compilation.cpp.i
+.PHONY : Blowfish_2_autogen/moc_compilation.cpp.i
+
+Blowfish_2_autogen/moc_compilation.s: Blowfish_2_autogen/moc_compilation.cpp.s
+
+.PHONY : Blowfish_2_autogen/moc_compilation.s
+
+# target to generate assembly for a file
+Blowfish_2_autogen/moc_compilation.cpp.s:
+	$(MAKE) -f CMakeFiles\Blowfish_2.dir\build.make CMakeFiles/Blowfish_2.dir/Blowfish_2_autogen/moc_compilation.cpp.s
+.PHONY : Blowfish_2_autogen/moc_compilation.cpp.s
+
 blowfish.obj: blowfish.cpp.obj
 
 .PHONY : blowfish.obj
@@ -185,6 +225,10 @@ help:
 	@echo ... Blowfish_2
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... Blowfish_2_autogen
+	@echo ... Blowfish_2_autogen/moc_compilation.obj
+	@echo ... Blowfish_2_autogen/moc_compilation.i
+	@echo ... Blowfish_2_autogen/moc_compilation.s
 	@echo ... blowfish.obj
 	@echo ... blowfish.i
 	@echo ... blowfish.s
