@@ -148,6 +148,8 @@ uint32_t Blowfish::F(union aword value) {
 }
 
 int Blowfish::getOutputLength(std::vector<BYTE> &data) {
+    if(data[data.size() - 1] == '\n')
+        data.pop_back();
     size_t length = data[data.size() - 1] - '0';
     if(0 < length && length < 10)
         for (size_t i = 0; i < length; ++i) {
