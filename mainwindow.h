@@ -20,7 +20,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_actionOpen_triggered();
 
     void on_actionExit_triggered();
 
@@ -28,13 +27,16 @@ private slots:
 
     void on_decryptButton_clicked();
 
-    void on_pushButton_clicked();
-
     void on_clearLog_clicked();
 
     void on_encryptButton_clicked();
 
+    void on_actionOpen_Files_triggered();
+
+    void on_clearFiles_clicked();
+
 private:
+    void FindFiles(QString rootPath, QStringList &result);
     Ui::MainWindow *ui;
     Blowfish *bf;
     std::vector<BYTE> inputPassword;
@@ -43,6 +45,7 @@ private:
     std::list<std::string> inputFileNames;
     std::vector<int> fileSize;
     std::vector<int> fileNameSize;
+    std::string IV;
     //std::string inputFileName;
     std::ifstream fin;
     std::ofstream fout;

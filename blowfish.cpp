@@ -10,6 +10,7 @@ Blowfish::Blowfish(const std::vector<BYTE> &key)
         else if (key.size() > 56) {
             throw 56;
         }
+        setRandomIV(IV);
         setupKey(key.data(),key.size());
     } catch(int i) {
         if(i == 4)
@@ -93,15 +94,22 @@ void Blowfish::decipher(uint32_t *xl, uint32_t *xr) {
 std::vector<BYTE> Blowfish::encrypt(const std::vector<BYTE> &dataInput) {
     std::vector<BYTE> dataOutput = dataInput;
     size_t padding_length;
-    if(dataOutput.size() % 8 == 0)
+    if(dataOutput.size() % 8 == 0) {
         padding_length = 0;
+        for(char i = '0';i < '10';i++) {
+            if (dataOutput[dataOutput.size() - 1] == i && !dataOutput.empty()) {
+                padding_length = 8;
+                break;
+            }
+        }
+    }
     else
         padding_length = sizeof(uint64_t) - dataInput.size() % sizeof(uint64_t);
     for (size_t i = 0; i < padding_length; ++i) {
         dataOutput.push_back((BYTE)(((int)'0') + padding_length));
     }
     for (size_t i = 0; i < sizeof(uint64_t); ++i) {
-        dataOutput.data()[i] ^= IV[i];
+        dataOutput.data()[i] ^= IV.data()[i];
     }
     uint32_t *Xl = &reinterpret_cast<uint32_t *>(dataOutput.data())[0];
     uint32_t *Xr = &reinterpret_cast<uint32_t *>(dataOutput.data())[1];
@@ -132,7 +140,7 @@ std::vector<BYTE> Blowfish::decrypt(const std::vector<BYTE> &dataInput) {
     uint32_t *Xr = &reinterpret_cast<uint32_t *>(dataOutput.data())[1];
     decipher(Xl,Xr);
     for (size_t j = 0; j < sizeof(uint64_t); ++j) {
-        dataOutput.data()[j] ^= IV[j];
+        dataOutput.data()[j] ^= IV.data()[j];
     }
     getOutputLength(dataOutput);
 
@@ -156,4 +164,22 @@ int Blowfish::getOutputLength(std::vector<BYTE> &data) {
             data.pop_back();
         }
     return length;
+}
+
+void Blowfish::setRandomIV(std::string &_IV) {
+    std::vector<char> tmp;
+    for(auto i = 0;i < 128;i++) {
+           tmp.push_back(i);
+    }
+    for(int i = 0;i < 8;i ++) {
+        _IV += tmp[rand() % tmp.size()];
+    }
+}
+
+std::string Blowfish::getIV() {
+    return IV;
+}
+
+void Blowfish::setIV(std::string _IV) {
+    IV = _IV;
 }

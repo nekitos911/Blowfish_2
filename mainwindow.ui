@@ -6,18 +6,96 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>512</width>
-    <height>548</height>
+    <width>518</width>
+    <height>593</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_5">
+   <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
-     <layout class="QGridLayout" name="gridLayout_4">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QTextBrowser" name="filesField"/>
+      </item>
       <item row="1" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>408</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="clearFiles">
+          <property name="text">
+           <string>Clear</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Enter Password: </string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="password"/>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_5"/>
+      </item>
+      <item row="4" column="0">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>328</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="encryptButton">
+          <property name="text">
+           <string>Encrypt</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="decryptButton">
+          <property name="text">
+           <string>Decrypt</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="5" column="0">
+       <widget class="QTextBrowser" name="errorLabel"/>
+      </item>
+      <item row="6" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
          <spacer name="horizontalSpacer_3">
@@ -26,7 +104,7 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>308</width>
+            <width>388</width>
             <height>20</height>
            </size>
           </property>
@@ -41,97 +119,6 @@
         </item>
        </layout>
       </item>
-      <item row="0" column="0">
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="2" column="0">
-         <widget class="QTextBrowser" name="errorLabel"/>
-        </item>
-        <item row="0" column="0">
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item>
-           <widget class="QTextBrowser" name="filesField"/>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>308</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="clearFiles">
-              <property name="text">
-               <string>Clear</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item row="1" column="0">
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="2" column="0">
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <item>
-             <spacer name="horizontalSpacer">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>158</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-               <widget class="QPushButton" name="encryptButton">
-                <property name="text">
-                 <string>Encrypt</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="decryptButton">
-                <property name="text">
-                 <string>Decrypt</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item row="1" column="0">
-           <layout class="QGridLayout" name="gridLayout_2">
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="password"/>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>Enter Password:</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </item>
      </layout>
     </item>
    </layout>
@@ -141,7 +128,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>512</width>
+     <width>518</width>
      <height>20</height>
     </rect>
    </property>
@@ -149,19 +136,15 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionOpen"/>
+    <addaction name="actionOpen_Files"/>
     <addaction name="actionOpen_Folders"/>
    </widget>
    <addaction name="menuFile"/>
   </widget>
-  <action name="actionOpen">
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionOpen_Files">
    <property name="text">
     <string>Open Files</string>
-   </property>
-  </action>
-  <action name="actionExit">
-   <property name="text">
-    <string>Exit</string>
    </property>
   </action>
   <action name="actionOpen_Folders">

@@ -1,13 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "QStringList"
-#include "md5.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->errorLabel->setText("Use Files->Open Files(Folders) for encrypt your files");
+    ui->errorLabel->append("Use Files->Open Files and choose encrypted.bin for decrypt your files");
 }
 
 MainWindow::~MainWindow()
@@ -15,7 +16,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_actionOpen_triggered()
+void MainWindow::on_actionOpen_Files_triggered()
 {
 
     QStringList files = QFileDialog::getOpenFileNames();
@@ -24,16 +25,19 @@ void MainWindow::on_actionOpen_triggered()
         ui->filesField->setPlaceholderText("\n");
         inputFileNames.push_back(file.toStdString());
     }
-    for (auto &inputFileName : inputFileNames) {
-        for(int i = 0;i < inputFileName.size();i++ )
-            if(inputFileName[i] == '/')
-                inputFileName.replace(static_cast<unsigned int>(i), 1, "\\\\");
-    }
 }
 
 void MainWindow::on_actionExit_triggered()
 {
 
+}
+void MainWindow::FindFiles(QString rootPath, QStringList &result)
+{
+    foreach(QFileInfo fileInfo, QDir(rootPath).entryInfoList(QDir::NoDotAndDotDot | QDir::Files))
+        result.push_back(fileInfo.absoluteFilePath());
+
+    foreach(QString dir, QDir(rootPath).entryList(QDir::NoDotAndDotDot | QDir::Dirs))
+        FindFiles(rootPath +"/" + dir, result);
 }
 
 void MainWindow::on_actionOpen_Folders_triggered()
@@ -42,13 +46,23 @@ void MainWindow::on_actionOpen_Folders_triggered()
     dialog.setFileMode(QFileDialog::Directory);
     dialog.setOption(QFileDialog::ShowDirsOnly);
     QString folder = dialog.getExistingDirectory();
-    ui->filesField->append(folder);
-    ui->filesField->setPlaceholderText("\n");
+    QStringList files;
+    FindFiles(folder,files);
+    for (auto &file : files) {
+        ui->filesField->append(file);
+        ui->filesField->setPlaceholderText("\n");
+        inputFileNames.push_back(file.toStdString());
+    }
 }
 
 void MainWindow::on_encryptButton_clicked()
 {
     try {
+        for (auto &inputFileName : inputFileNames) {
+            for(int i = 0;i < inputFileName.size();i++ )
+                if(inputFileName[i] == '/')
+                    inputFileName.replace(static_cast<unsigned int>(i), 1, "\\\\");
+        }
    char ch;
         auto *files = new std::string[inputFileNames.size()];
    std::vector<BYTE> vec;
@@ -81,12 +95,9 @@ void MainWindow::on_encryptButton_clicked()
                   fileNameSize.push_back(count);
                   vec.clear();
    }
-   std::ofstream mdStream("hash.bin",std::ios::binary);
-   std::string md5hash = md5(files[0]);
-       mdStream << md5hash;
-       mdStream.close();
    fout.close();
    fout.open("encrypted.bin",std::ios_base::binary);
+   fout << bf->getIV();
    for (auto &inputFileName : inputFileNames) {
        fin.open(inputFileName,std::ios_base::binary);
        int count = 0;
@@ -111,9 +122,11 @@ void MainWindow::on_encryptButton_clicked()
            fout.close();
            ui->filesField->clear();
            ui->password->clear();
+           ui->errorLabel->clear();
            inputString.clear();
            inputFileNames.clear();
            fileSize.clear();
+           IV.clear();
            delete[] files;
            delete bf;
     } catch(std::string errorStr) {
@@ -124,6 +137,12 @@ void MainWindow::on_encryptButton_clicked()
 
 void MainWindow::on_decryptButton_clicked()
 {
+    try {
+        if(inputFileNames.size() != 1) {
+            error = "Chose only encrypted.bin";
+            throw error;
+    }
+
    char ch;
    fin.open("file_size.bin",std::ios_base::binary);
    int filesCount = 0;
@@ -154,7 +173,6 @@ void MainWindow::on_decryptButton_clicked()
        throw (error);
    }
     auto *decryptedFilesName = new std::string[filesCount];
-      try {
    password = ui->password->text().toStdString();
    if (password.size()  > 56 || password.size() < 4) {
         error = "Password should be from 4 to 56";
@@ -162,6 +180,16 @@ void MainWindow::on_decryptButton_clicked()
     }
    std::copy(password.begin(),password.end(),std::back_inserter(inputPassword));
    bf = new Blowfish(inputPassword);
+   auto it = inputFileNames.begin();
+   std::ifstream IVStream;
+   IVStream.open(*it,std::ios_base::binary);
+
+   for(int i = 0;i < 8;i ++) {
+       IVStream.get(ch);
+       IV += ch;
+   }
+   IVStream.close();
+   bf->setIV(IV);
    int tmpSize = 0;
    for(int i = 0;i < filesCount;i ++) {
        while(tmpSize < fileNameSize[i]) {
@@ -175,16 +203,9 @@ void MainWindow::on_decryptButton_clicked()
        tmpSize = 0;
        inputString.clear();
    }
-   std::ifstream mdStream("hash.bin",std::ios::binary);
-   std::string md5hash;
-   mdStream >> md5hash;
    fin.close();
-           if(md5hash != md5(decryptedFilesName[0])) {
-                error = "Wrong password!!!";
-               throw error;
-           }
-   auto it = inputFileNames.begin();
    fin.open(*it,std::ios_base::binary);
+   CreateDirectoryW(L"Decrypted", NULL);
    for(int i = 0;i < filesCount;i++) {
        while(tmpSize < fileSize[i]) {
            fin.get(ch);
@@ -192,7 +213,7 @@ void MainWindow::on_decryptButton_clicked()
            tmpSize++;
        }
        inputString = bf->decrypt(inputString);
-       fout.open(decryptedFilesName[i],std::ios_base::binary);
+       fout.open("Decrypted\\" + decryptedFilesName[i],std::ios_base::binary);
        for (auto &it1 : inputString) {
            fout << it1;
        }
@@ -203,27 +224,29 @@ void MainWindow::on_decryptButton_clicked()
    fin.close();
    ui->filesField->clear();
    ui->password->clear();
+   ui->errorLabel->clear();
    inputString.clear();
    inputFileNames.clear();
    fileSize.clear();
+   IV.clear();
    remove("file_size.bin");
    remove("encrypted.bin");
    remove("file_names.bin");
-   remove("hash.bin");
    } catch(std::string errorStr) {
        QString str;
        ui->errorLabel->append(str.fromStdString(errorStr));
    }
 
 }
-void MainWindow::on_pushButton_clicked()
-{
-    ui->filesField->clear();
-    inputString.clear();
-    inputFileNames.clear();
-}
 
 void MainWindow::on_clearLog_clicked()
 {
     ui->errorLabel->clear();
+}
+
+void MainWindow::on_clearFiles_clicked()
+{
+    ui->filesField->clear();
+    inputFileNames.clear();
+    inputString.clear();
 }

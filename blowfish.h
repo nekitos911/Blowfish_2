@@ -25,11 +25,12 @@ class Blowfish
 private:
     uint32_t p[18];
     uint32_t s[4][256];
-    const BYTE *IV = reinterpret_cast<const BYTE *>("qwertyui");
+    std::string IV;
 
     void setupKey(const BYTE *key,int length);
     void encipher(uint32_t *xl,uint32_t *xr);
     void decipher(uint32_t *xl,uint32_t *xr);
+    void setRandomIV(std::string  &_IV);
     uint32_t F(aword value);
 
     int getOutputLength(std::vector<BYTE> &data);
@@ -38,6 +39,9 @@ public:
 
     std::vector<BYTE> decrypt(const std::vector<BYTE> &dataInput);
     std::vector<BYTE> encrypt(const std::vector<BYTE> &dataInput);
+
+    std::string getIV();
+    void setIV(std::string _IV);
 
 };
 #endif // BLOWFISH_H
